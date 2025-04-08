@@ -1,5 +1,63 @@
-<html>
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wix-style WOW Image</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        background: #f0f0f0;
+      }
+      .container {
+        max-width: 800px;
+        margin: 100px auto;
+        text-align: center;
+      }
+      .wow-image {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+        transition: all 0.8s ease-out;
+        will-change: opacity, transform;
+      }
+      .wow-image.active {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      img {
+        max-width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
   <body>
-    하핳하234
+    <div class="container">
+      <h1>Wix-style WOW 이미지</h1>
+      <p>스크롤하면 이미지가 등장합니다.</p>
+      <div class="wow-image">
+        <img
+          src="https://via.placeholder.com/700x400.png?text=Wow+Image"
+          alt="Wow Image"
+        />
+      </div>
+    </div>
+
+    <script>
+      const wowImage = document.querySelector(".wow-image");
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            wowImage.classList.add("active");
+            observer.disconnect(); // 한 번만 실행되도록
+          }
+        });
+      });
+
+      observer.observe(wowImage);
+    </script>
   </body>
 </html>
