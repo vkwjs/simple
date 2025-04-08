@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wix-style WOW Image</title>
+    <title>Vue CDN - WOW 이미지</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
       body {
         margin: 0;
@@ -34,27 +35,42 @@
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Wix-style WOW 이미지</h1>
-      <p>스크롤하면 이미지가 등장합니다.</p>
-      <div class="wow-image">
-        <img src="./img/pixel.jpg" alt="Wow Image" />
+    <div id="app">
+      <div class="container">
+        <h1>{{ title }}</h1>
+        <p>{{ description }}</p>
+        <div ref="imageRef" class="wow-image" :class="{ active: isVisible }">
+          <img src="./img/pixel.jpg" alt="Wow Image" />
+        </div>
       </div>
     </div>
 
     <script>
-      const wowImage = document.querySelector(".wow-image");
+      const { createApp, onMounted, ref } = Vue;
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            wowImage.classList.add("active");
-            observer.disconnect(); // 한 번만 실행되도록
-          }
-        });
-      });
+      createApp({
+        setup() {
+          const title = ref("Vue CDN WOW 이미지");
+          const description = ref("스크롤하면 이미지가 등장합니다.");
+          const isVisible = ref(false);
+          const imageRef = ref(null);
 
-      observer.observe(wowImage);
+          onMounted(() => {
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  isVisible.value = true;
+                  observer.disconnect();
+                }
+              });
+            });
+
+            observer.observe(imageRef.value);
+          });
+
+          return { title, description, isVisible, imageRef };
+        },
+      }).mount("#app");
     </script>
   </body>
 </html>
