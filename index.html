@@ -1,76 +1,14 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vue CDN - WOW 이미지</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: sans-serif;
-        background: #f0f0f0;
-      }
-      .container {
-        max-width: 800px;
-        margin: 100px auto;
-        text-align: center;
-      }
-      .wow-image {
-        opacity: 0;
-        transform: translateY(40px) scale(0.95);
-        transition: all 0.8s ease-out;
-        will-change: opacity, transform;
-      }
-      .wow-image.active {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-      img {
-        max-width: 100%;
-        border-radius: 12px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-      }
-    </style>
+    <title>Vite + Vue</title>
+    <script type="module" crossorigin src="/assets/index-CVbASLhU.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CLjwVGIU.css" />
   </head>
   <body>
-    <div id="app">
-      <div class="container">
-        <h1>{{ title }}</h1>
-        <p>{{ description }}</p>
-        <div ref="imageRef" class="wow-image" :class="{ active: isVisible }">
-          <img src="./img/pixel.jpg" alt="Wow Image" />
-        </div>
-      </div>
-    </div>
-
-    <script>
-      const { createApp, onMounted, ref } = Vue;
-
-      createApp({
-        setup() {
-          const title = ref("Vue CDN WOW 이미지");
-          const description = ref("스크롤하면 이미지가 등장합니다.");
-          const isVisible = ref(false);
-          const imageRef = ref(null);
-
-          onMounted(() => {
-            const observer = new IntersectionObserver((entries) => {
-              entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                  isVisible.value = true;
-                  observer.disconnect();
-                }
-              });
-            });
-
-            observer.observe(imageRef.value);
-          });
-
-          return { title, description, isVisible, imageRef };
-        },
-      }).mount("#app");
-    </script>
+    <div id="app"></div>
   </body>
 </html>
